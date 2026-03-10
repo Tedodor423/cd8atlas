@@ -1,0 +1,140 @@
+Loading python-cbrg/current
+  Loading requirement: python-base/3.11.14
+/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/celltypist/classifier.py:11: FutureWarning: `__version__` is deprecated, use `importlib.metadata.version('scanpy')` instead
+  from scanpy import __version__ as scv
+2026-03-10 15:38:37.471651: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-03-10 15:38:38.612416: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Loaded: /ceph/project/sharmalab/dnimrich/cd8atlas/data/huARdb_v2_GEX.CD8.hvg4k.h5ad with shape (1125712, 4000)
+After subsampling: (100000, 4000)
+Using pre-annotated HVGs: 4000
+Saved: /ceph/project/sharmalab/dnimrich/cd8atlas/output/test_pipeline/adata_processed.h5ad
+CBB Profiling started Tue Mar 10 15:37:06 2026
+SLURM_JOB_ID		5231811
+REQ_CPU_CORES		4
+REQ_MEMORY_GB		10.000000
+Starting profiling...
+
+                                                                                
+                                                                                
+                                    CPU (cores)                                 
+    4 +---------------------------------------------------------------------+   
+      |           +          +           +           +          +           |   
+      |                                                                     |   
+  3.5 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+    3 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+  2.5 |-+                                                                 +-|   
+      |                                                                     |   
+    2 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+  1.5 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+    1 |#+                                  #########################      +-|   
+      |#         ##########################                                 |   
+      | ##    ####                                                          |   
+  0.5 |-+#####                                                            +-|   
+      |                                                                     |   
+      |           +          +           +           +          +           |   
+    0 +---------------------------------------------------------------------+   
+      0           50        100         150         200        250         300  
+                                Job profiling step                              
+                                                                                
+
+                                                                                
+                                                                                
+                                   Memory (GB)                                  
+  10 +----------------------------------------------------------------------+   
+     |           +           +           +          +           +           |   
+   9 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+   8 |-+                                                                  +-|   
+     |                                                                      |   
+   7 |-+                                                                  +-|   
+     |                                                                      |   
+   6 |-+                                                                  +-|   
+     |                                                                      |   
+   5 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+   4 |-+                                                                  +-|   
+     |     #                                                                |   
+   3 |-+  ##                                                              +-|   
+     |   ###                                                                |   
+   2 |-+ # #                   #####################################      +-|   
+     |  ## #               #####                                            |   
+     |  #  ###   ##########                                                 |   
+   1 |-##  ## ###                                                         +-|   
+     |##         +           +           +          +           +           |   
+   0 +----------------------------------------------------------------------+   
+     0           50         100         150        200         250         300  
+                               Job profiling step                               
+                                                                                
+
+                                                                                
+                                                                                
+                                   Data read (GB)                               
+  0.0012 +------------------------------------------------------------------+   
+         |          +          +           +          +          +          |   
+         |                                                                  |   
+         |                                                                  |   
+   0.001 |-+                                                       ##     +-|   
+         |                                                         #        |   
+         |                                                         #        |   
+         |                                                         #        |   
+  0.0008 |-+                                                       #      +-|   
+         |                                                         #        |   
+         |                                                         #        |   
+  0.0006 |-+                                                       #      +-|   
+         |                                                         #        |   
+         |                                                         #        |   
+         |                                                         #        |   
+  0.0004 |-+                                                       #      +-|   
+         |                                                         #        |   
+         |                                                         #        |   
+         |                                                         #        |   
+  0.0002 |-+                                                       #      +-|   
+         |                                                         #        |   
+         |                                                         #        |   
+         |          +          +           +          +          + #        |   
+       0 +------------------------------------------------------------------+   
+         0          50        100         150        200        250        300  
+                                 Job profiling step                             
+                                                                                
+
+                                                                                
+                                                                                
+                                 Data written (GB)                              
+   0.3 +--------------------------------------------------------------------+   
+       |           +          +           +          +           + #        |   
+       |                                                           #        |   
+       |                                                           #        |   
+  0.25 |-+                                                         #      +-|   
+       |                                                           #        |   
+       |                                                           #        |   
+       |                                                           #        |   
+   0.2 |-+                                                         #      +-|   
+       |                                                           #        |   
+       |                                                           #        |   
+  0.15 |-+                                                         #      +-|   
+       |                                                           #        |   
+       |                                                           #        |   
+       |                                                          #         |   
+   0.1 |-+                                                        #       +-|   
+       |                                                          #         |   
+       |                                                          #         |   
+       |                                                          #         |   
+  0.05 |-+                                                        #       +-|   
+       |                                                          #         |   
+       |                                                          #         |   
+       |           +          +           +          +           +#         |   
+     0 +--------------------------------------------------------------------+   
+       0           50        100         150        200         250        300  
+                                Job profiling step                              
+                                                                                

@@ -1,0 +1,153 @@
+Loading python-cbrg/current
+  Loading requirement: python-base/3.11.14
+/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/celltypist/classifier.py:11: FutureWarning: `__version__` is deprecated, use `importlib.metadata.version('scanpy')` instead
+  from scanpy import __version__ as scv
+Traceback (most recent call last):
+  File "/ceph/project/sharmalab/dnimrich/cd8atlas/test_pipeline.py", line 72, in <module>
+    print(f"Saved: {run_pipeline()}")
+                    ^^^^^^^^^^^^^^
+  File "/ceph/project/sharmalab/dnimrich/cd8atlas/test_pipeline.py", line 30, in run_pipeline
+    adata = sc.read_h5ad(str(input_h5ad))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/anndata/_io/h5ad.py", line 262, in read_h5ad
+    with h5py.File(filename, "r") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/h5py/_hl/files.py", line 566, in __init__
+    fid = make_fid(name, mode, userblock_size, fapl, fcpl, swmr=swmr)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/h5py/_hl/files.py", line 241, in make_fid
+    fid = h5f.open(name, flags, fapl=fapl)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 104, in h5py.h5f.open
+FileNotFoundError: [Errno 2] Unable to synchronously open file (unable to open file: name = 'data/huARdb_v2_GEX.CD8.hvg4k.h5ad', errno = 2, error message = 'No such file or directory', flags = 0, o_flags = 0)
+CBB Profiling started Tue Mar 10 15:32:35 2026
+SLURM_JOB_ID		5231757
+REQ_CPU_CORES		4
+REQ_MEMORY_GB		10.000000
+Starting profiling...
+
+                                                                                
+                                                                                
+                                    CPU (cores)                                 
+    4 +---------------------------------------------------------------------+   
+      |           +          +           +           +          +           |   
+      |                                                                     |   
+  3.5 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+    3 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+  2.5 |-+                                                                 +-|   
+      |                                                                     |   
+    2 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+  1.5 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+    1 |-+                                                                 +-|   
+      |                 ####################################################|   
+      |          #######                                                    |   
+  0.5 |-+     ###                                                         +-|   
+      |    ###                                                              |   
+      | ###       +          +           +           +          +           |   
+    0 +---------------------------------------------------------------------+   
+      0           1          2           3           4          5           6   
+                                Job profiling step                              
+                                                                                
+
+                                                                                
+                                                                                
+                                   Memory (GB)                                  
+  10 +----------------------------------------------------------------------+   
+     |           +           +           +          +           +           |   
+   9 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+   8 |-+                                                                  +-|   
+     |                                                                      |   
+   7 |-+                                                                  +-|   
+     |                                                                      |   
+   6 |-+                                                                  +-|   
+     |                                                                      |   
+   5 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+   4 |-+                                                                  +-|   
+     |                                                                      |   
+   3 |-+                                                                  +-|   
+     |                                                                      |   
+   2 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+   1 |-+                                                                  +-|   
+     |           +           +           +     #############################|   
+   0 +----------------------------------------------------------------------+   
+     0           1           2           3          4           5           6   
+                               Job profiling step                               
+                                                                                
+
+                                                                                
+                                                                                
+                                  Data read (GB)                                
+    1 +---------------------------------------------------------------------+   
+      |           +          +           +           +          +           |   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+  0.5 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+    0 |#####################################################################|   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+ -0.5 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+      |           +          +           +           +          +           |   
+   -1 +---------------------------------------------------------------------+   
+      0           1          2           3           4          5           6   
+                                Job profiling step                              
+                                                                                
+
+                                                                                
+                                                                                
+                                   Data written (GB)                            
+  4.5e-05 +-----------------------------------------------------------------+   
+          |          +          +          +          +          +          |   
+          |                     ############################################|   
+    4e-05 |-+                 ##                                          +-|   
+          |                  #                                              |   
+  3.5e-05 |-+              ##                                             +-|   
+          |              ##                                                 |   
+          |             #                                                   |   
+    3e-05 |-+         ##                                                  +-|   
+          |          #                                                      |   
+  2.5e-05 |-+       #                                                     +-|   
+          |        #                                                        |   
+          |       #                                                         |   
+    2e-05 |-+    #                                                        +-|   
+          |     #                                                           |   
+  1.5e-05 |-+   #                                                         +-|   
+          |    #                                                            |   
+          |   #                                                             |   
+    1e-05 |-+#                                                            +-|   
+          | #                                                               |   
+    5e-06 |#+                                                             +-|   
+          |                                                                 |   
+          |          +          +          +          +          +          |   
+        0 +-----------------------------------------------------------------+   
+          0          1          2          3          4          5          6   
+                                  Job profiling step                            
+                                                                                
