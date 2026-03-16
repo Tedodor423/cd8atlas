@@ -1,6 +1,31 @@
-# Source
-- https://www.nature.com/articles/s41592-024-02530-0
-- https://zenodo.org/records/13382785
+## Documents
+- [draft project description](https://unioxfordnexus-my.sharepoint.com/:w:/r/personal/rdom0281_ox_ac_uk/Documents/project%20plans/student%20project/David%20project%20draft.docx?d=wd93b3192ff1d45a6a30ebb6606caca1d&csf=1&web=1&e=NgBtd4)
+- [todo list](https://unioxfordnexus-my.sharepoint.com/:w:/r/personal/rdom0281_ox_ac_uk/Documents/project%20plans/student%20project/David-%20to%20do%20list.docx?d=wad99e5995b984b7da27bf1fbebd36035&csf=1&web=1&e=a8Qa2K)
 
 # Checklist
-- [ ] add checklist
+
+1. **Generation of the T cell atlas across diseases and tissues (excel sheet, in progress)**
+
+    1. [ ] create checklist
+    2. [ ] Check the platform for sequencing, the reference genome used (if they mapped differently, highlight them), gene names (if they are from different nomenclature then you cannot map them- HUGO is preferred/ HGNC or the Ensembl gene IDs needs to be mapped to HUGO). 
+
+    3. [ ] Check the meta data, especially column name across studies, such as batch, donor, disease names and collected tissues etc. They need to be concordant with each other. In the excel sheet I am preparing I am making them concordant so, you need to annotate them accordingly. (There are examples within the GitHub page I sent you above) 
+    
+
+
+2. [ ] **Inhibitory receptor analyses (list of receptors: [data/protein_list.csv])**
+	1. [ ] Start with smaller scale CD8+ T cell data. (You can have CD4+ T cells as well but in this case, we are not really looking for them. You can get rid of them once you have log1p transformed data: You should have cells with CD8 expression and no CD4 expression)  
+	2. [ ] Check QC and filter your dataset with good quality cells  
+	3. [ ] Optimise your parameter and collect your statistics about the data (important to justify why you have used specific number of clusters etc., check what are the highly expressed genes does that make biological sense) 
+	4. [ ] Once you have T cell state clusters, use markers to understand what biology each cluster is representing. (You can use the markers in this [paper](https://www.biorxiv.org/content/10.1101/2024.07.17.603780v1.full) Figure 1D). But please also check literature for how you can better name them. You can use the paper of the data.  
+	5. [ ] Then, you can start to check where the inhibitory receptors are expressed (as a sanity check, you need to see them in effector, cytotoxic and exhausted cells and not in naive cells). You can check what meta data you have (disease, tissue collected, age etc) and then try to compare if they have an effect on any receptor expression: Navigate the data with statistics (consider using pseudobulking as well): 
+	6. [ ] Boxplots: x-axis diseases and y-axis scaled expression of receptors among cells. You can make statistical test between them.  
+	7. [ ] Odds ratio: You can binarise expression as exist or not exist and test with Fisher test across tissues/diseases. 
+	8. [ ] More sophisticated a linear model: You can use expression value as y, and x will be any meta data or combination of them, and you can apply OLS and p-value correction to collect significant associations.  
+	9. [ ] Later step would be transcriptional regulation. I will explain later.
+
+
+
+# Data Sources
+- https://www.nature.com/articles/s41592-024-02530-0
+- https://zenodo.org/records/13382785
