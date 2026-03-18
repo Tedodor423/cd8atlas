@@ -20,4 +20,4 @@ module load python-cbrg
 export PYTHONUSERBASE=/ceph/project/sharmalab/dnimrich/my-python
 
 
-python /ceph/project/sharmalab/dnimrich/cd8atlas/test_pipeline.py
+python /ceph/project/sharmalab/dnimrich/cd8atlas/code/test_pipeline.py
