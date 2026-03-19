@@ -1,24 +1,18 @@
-import os, time, matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import pandas as pd
-import h5py
 import scanpy as sc
-import anndata as ad
-from anndata import AnnData
-import scipy.io
 import scipy.sparse as sp
 import scrublet as scr
-import decoupler as dc
-import celltypist
-from celltypist import models
+# import celltypist
+# from celltypist import models
 import scipy.stats as stats
-# import PyComplexHeatmap as pch
 from pathlib import Path
+import bioreport
 
 
-# SETTINGS ####
+# region SETTINGS ####
 plt.rcParams["savefig.dpi"] = 300
 plt.rcParams["figure.figsize"] = [5, 4]
 plt.rcParams["savefig.bbox"] = "tight"
@@ -36,27 +30,36 @@ figures_dir.mkdir(parents=True, exist_ok=True)
 data_dir.mkdir(parents=True, exist_ok=True)
 
 random_seed = 423
-##############
+min_cells_per_gene = 20
+# endregion #############
 
-# 0. load data
+# region 0. load/subsample data
 adata = sc.read_h5ad(str(input_h5ad))
 print(f"Loaded: {input_h5ad} with shape {adata.shape}")
 
 ## subsampling
 
-max_cells = 100_000
-if max_cells and adata.n_obs > max_cells:
-    idx = np.random.default_rng(random_seed).choice(adata.n_obs, size=max_cells, replace=False)
-    adata = adata[idx, :].copy()
+subsample_amount = 100_000
+if subsample_amount and adata.n_obs > subsample_amount:
+    idx = np.random.default_rng(random_seed).choice(adata.n_obs, size=subsample_amount, replace=False)
+    adata = adata[idx, :]
     print(f"After subsampling: {adata.shape}")
-
 
 ## preserve original counts
 adata.layers["counts"] = adata.X.copy() 
 
-# 1. QC
+# endregion
 
-## 1.1 ambient RNA QC
+# ## save subsampled data
+# adata.write_h5ad(data_dir / f"subsampled_{subsample_amount}.h5ad")
+
+# ## retrieve subsampled data
+# adata = sc.read_h5ad(data_dir / f"subsampled_100000.h5ad")
+# print(f"Loaded data with shape {adata.shape}")
+
+# region 1. QC
+
+# region 1.1 ambient RNA QC
 ### check if necessary
 
 low_count_treshold = 1_000
@@ -67,8 +70,9 @@ if low_count_cells.mean() > frac_treshold:
     print("potential RNA contamination, clean up the data")
     exit()
 
+# endregion
 
-## 1.2 count QC
+# region 1.2 count QC
 ### QC metrics
 
 #### mitochondrial genes
@@ -77,6 +81,7 @@ adata.var["mt"] = adata.var_names.str.startswith("MT-")
 adata.var["ribo"] = adata.var_names.str.startswith(("RPS", "RPL"))
 #### hemoglobin genes.
 adata.var["hb"] = adata.var_names.str.contains("^HB[^(P)]")
+
 
 sc.pp.calculate_qc_metrics(
     adata,
@@ -123,12 +128,21 @@ qc_scatter_genes = sc.pl.scatter(adata, "total_counts", "n_genes_by_counts", col
 plt.savefig(figures_dir / "qc_before_scatter_genes_total_mt.png")
 plt.close()
 
-
-### Filter
-print(f"Total number of cells: {adata.n_obs}")
+### Filter based on counts
+print(f"Size of matrix before count filtering: {adata.shape}")
 adata = adata[(~adata.obs.outlier) & (~adata.obs.mt_outlier)]
 
-print(f"Number of cells after filtering of low quality cells: {adata.n_obs}")
+### Filter out mt, ribo, hb genes
+adata = adata[:, ~(adata.var.mt | adata.var.ribo | adata.var.hb)]
+print(f"Size of matrix after count filtering: {adata.shape}")
+
+### Filter genes with too few detected cells before HVG selection
+genes_before_filter = adata.n_vars
+sc.pp.filter_genes(adata, min_cells=min_cells_per_gene)
+print(
+    f"Number of genes after min_cells >= {min_cells_per_gene} filtering: "
+    f"{adata.n_vars} (removed {genes_before_filter - adata.n_vars})"
+)
 
 ### plot after count QC
 sns.displot(adata.obs["total_counts"], bins=100, kde=True).savefig(figures_dir / "qc_after_total_counts_hist.png")
@@ -136,9 +150,9 @@ sc.pl.scatter(adata, "total_counts", "n_genes_by_counts", color="pct_counts_mt")
 plt.savefig(figures_dir / "qc_after_scatter_genes_total_mt.png")
 plt.close()
 
+# endregion
 
-
-## 1.3 Doublet QC
+# region 1.3 Doublet QC
 n_obs_before_doublet_qc = adata.n_obs  # for statistics
 ### prepare input
 counts_csr = adata.layers["counts"].tocsr() if not sp.issparse(adata.layers["counts"]) else adata.layers["counts"].tocsr()
@@ -164,8 +178,10 @@ else:
     print("No doublets predicted")
 print(f"After doublet step: {adata.shape} (kept {adata.n_obs}/{n_obs_before_doublet_qc} cells)")
 
+# endregion
+# endregion
 
-# 2. Normalisation
+# region 2. Normalisation
 
 # ## retrieve count values - not necessary now
 # adata.X = adata.layers["counts"].copy() 
@@ -188,19 +204,72 @@ sns.histplot(log1p_library_size, bins=100, kde=False)
 plt.savefig(figures_dir / "normalisation_log1p_hist.png")
 plt.close()
 
+# endregion
 
-# ## save progress
-# adata.write_h5ad(data_dir / "qc+normalised.h5ad")
+## save progress
+adata.write_h5ad(data_dir / "qc+normalised.h5ad")
 
 # ## retrieve progress
 # adata = sc.read_h5ad(data_dir / "qc+normalised.h5ad")
 # print(f"Loaded data with shape {adata.shape}")
 
 
-# 3. Feature selection
+# labeling, CC analysis
+
+# region 3. Feature selection
 ## 3.1 Cell selection - none here
 
-## 3.2. HVG selection
+## 3.2 Gene exclusion
+
+excluded_gene_sets = {
+    "stress_genes": [
+        "G0S2", "JUN", "JUNB", "JUND", "FOS", "FOSB", "FOSL1", "FOSL2", "CDKN1A"
+    ],
+    "cc_genes": [
+        "MCM2", "MCM3", "MCM4", "MCM5", "MCM6", "MCM7", "PCNA", "TYMS",
+        "FEN1", "MKI67", "TOP2A", "TK1", "RRM1", "RRM2", "HELLS", "UNG",
+        "GINS2", "CDC6", "CDK1", "CDC20", "CCNB1", "CCNB2", "AURKA", "AURKB",
+        "BUB1", "BUB1B", "UBE2C", "CENPF", "CENPE", "HMGB2",
+    ],
+    "bad_features": ["MALAT1", "NEAT1"],
+}
+
+excluded_gene_patterns = {
+    "IFN_genes": r"^(IFI|IFIT|IFITM|ISG|MX|OAS|IRF|STAT1$|STAT2$|RSAD2$|BST2$)",
+    "ccl_genes": r"^CCL",
+    "MHC_genes": r"^(HLA-[A-Z]|B2M$|TAP1$|TAP2$|PSMB8$|PSMB9$)",
+    "hist_genes": r"^HIST",
+    "comp_genes": r"^(C1Q|C1R$|C1S$|C2$|C3$|CFB$|CFD$|C7$)",
+    "ig_genes": r"^(IGH|IGK|IGL|JCHAIN$|MZB1$)",
+    "hb_genes": r"^HB(?!P)",
+}
+
+gene_names_upper = adata.var_names.str.upper()
+excluded_gene_mask = pd.Series(False, index=adata.var_names, dtype=bool)
+excluded_gene_summary = {}
+
+for gene_set_name, gene_list in excluded_gene_sets.items():
+    current_mask = gene_names_upper.isin(gene_list)
+    excluded_gene_mask |= current_mask
+    excluded_gene_summary[gene_set_name] = int(current_mask.sum())
+
+for gene_set_name, pattern in excluded_gene_patterns.items():
+    current_mask = gene_names_upper.str.contains(pattern, regex=True)
+    excluded_gene_mask |= current_mask
+    excluded_gene_summary[gene_set_name] = int(current_mask.sum())
+
+print("Genes matched by exclusion panel:")
+for gene_set_name, n_genes in excluded_gene_summary.items():
+    print(f"  {gene_set_name}: {n_genes}")
+
+print(f"Removing {int(excluded_gene_mask.sum())} genes from exclusion panel before HVG selection")
+adata.var["excluded_feature"] = excluded_gene_mask.to_numpy()
+adata = adata[:, ~adata.var["excluded_feature"]].copy()
+print(f"Shape after exclusion panel filtering: {adata.shape}")
+
+
+
+## 3.3. HVG selection
 ### using seurat as seurat_v3 with original counts raises an environment error
 sc.pp.highly_variable_genes(adata, layer='log1p', flavor='seurat', n_top_genes=4000, inplace=True)
 print("HVG selected:", int(adata.var["highly_variable"].sum()))
@@ -218,6 +287,8 @@ sns.scatterplot(data=adata.var, x="means", y="dispersions", hue="highly_variable
 plt.savefig(figures_dir / "hvg_after.png")
 plt.close()
 
+#TODO investigate shape
+
 # ## save progress
 # adata.write_h5ad(data_dir / "qc+normalised+hvg.h5ad")
 # ## retrieve progress
@@ -229,8 +300,9 @@ sc.pl.highest_expr_genes(adata, n_top=20, show=False)
 plt.savefig(figures_dir / "top20_expr_genes.png")
 plt.close()
 
+# endregion
 
-# 4. Dimension reduction (=Embedding) 
+# region 4. Dimension reduction (=Embedding) 
 
 ## PCA (linear reduction)
 n_pcs = 30
@@ -248,8 +320,9 @@ sc.pl.pca_scatter(adata, color=pca_color_cols, ncols=2, show=False)
 plt.savefig(figures_dir / "pca_scatter.png", dpi=100)
 plt.close()
  
+# endregion
 
-# 5. Clustering
+# region 5. Clustering
 ## create k neighbour graph
 n_neighbors = 15
 sc.pp.neighbors(adata, n_neighbors=n_neighbors, n_pcs=n_pcs, random_state=random_seed)
@@ -268,3 +341,5 @@ plt.close()
 
 ## save processed data
 adata.write_h5ad(data_dir / "adata_processed.h5ad")
+
+# endregion
