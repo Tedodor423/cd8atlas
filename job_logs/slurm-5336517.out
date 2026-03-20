@@ -1,0 +1,209 @@
+Loading python-cbrg/current
+  Loading requirement: python-base/3.11.14
+/ceph/project/sharmalab/dnimrich/cd8atlas/code/parameter_iteration/parameter_iteration.py:141: ImplicitModificationWarning: Trying to modify attribute `.obs` of view, initializing view as actual.
+  adata.obs["doublet_score"] = doublet_scores
+/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/scanpy/preprocessing/_normalization.py:269: UserWarning: Received a view of an AnnData. Making a copy.
+  view_to_actual(adata)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+2026-03-18 13:06:07.712193: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-03-18 13:06:09.016618: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+/ceph/project/sharmalab/dnimrich/cd8atlas/code/parameter_iteration/parameter_iteration.py:227: FutureWarning: In the future, the default backend for leiden will be igraph instead of leidenalg.
+
+ To achieve the future defaults please pass: flavor="igraph" and n_iterations=2.  directed must also be False to work with igraph's implementation.
+  sc.tl.leiden(adata_i, resolution=leiden_resolution, key_added=leiden_key)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+slurmstepd-imm-wn7: error: *** JOB 5336517 ON imm-wn7 CANCELLED AT 2026-03-18T14:59:34 DUE TO TIME LIMIT ***
+CBB Profiling started Wed Mar 18 12:59:23 2026
+SLURM_JOB_ID		5336517
+REQ_CPU_CORES		16
+REQ_MEMORY_GB		48.000000
+Starting profiling...
+
+                                                                                
+                                                                                
+                                   CPU (cores)                                  
+  16 +----------------------------------------------------------------------+   
+     |        +        +        +        +       +        +        +        |   
+     |                                                                      |   
+  14 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+  12 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+  10 |-+                                                                  +-|   
+     |                                                                      |   
+   8 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+   6 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+   4 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+   2 |-+   ######################## #                                     +-|   
+     |#######                     ###################################       |   
+     |#       +        +        +        +       +        +        +        |   
+   0 +----------------------------------------------------------------------+   
+     0       500      1000     1500     2000    2500     3000     3500     4000 
+                               Job profiling step                               
+                                                                                
+
+                                                                                
+                                                                                
+                                   Memory (GB)                                  
+  50 +----------------------------------------------------------------------+   
+     |***************************************************************       |   
+  45 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+  40 |-+                                                                  +-|   
+     |                                                                      |   
+  35 |-+                                                                  +-|   
+     |                                                                      |   
+  30 |-+                                                                  +-|   
+     |                                                                      |   
+  25 |-+                                                                  +-|   
+     |                                                                      |   
+     |    #### ## ### ## #### #         #  # #          # # # #### #        |   
+  20 |-+# #### ## ########### #  # #  # ## # #  #  # #  # # ###### #      +-|   
+     |  # #### ############## #  # #  # ## # #  #  # #  # # ########        |   
+  15 |#+#############################################################     +-|   
+     |# #                                                                   |   
+  10 |###                                                                 +-|   
+     |###                                                                   |   
+     |#                                                                     |   
+   5 |#+                                                                  +-|   
+     |#       +        +        +        +       +        +        +        |   
+   0 +----------------------------------------------------------------------+   
+     0       500      1000     1500     2000    2500     3000     3500     4000 
+                               Job profiling step                               
+                                                                                
+
+                                                                                
+                                                                                
+                                    Data read (GB)                              
+  0.00025 +-----------------------------------------------------------------+   
+          |       +        +       +       +#      +        +       +       |   
+          |                                 #                               |   
+          |                                 #                               |   
+          |                                 #                               |   
+   0.0002 |-+                               #                             +-|   
+          |                                 #                               |   
+          |                                 #                               |   
+          |                                 #                               |   
+  0.00015 |-+                               #                             +-|   
+          |                                 #                               |   
+          |                                 #                               |   
+          |                                 #                               |   
+          |                                 #                               |   
+   0.0001 |-+                               #                             +-|   
+          |                                 #                               |   
+          |                                 #                               |   
+          |                                 #                               |   
+    5e-05 |-+                               #                             +-|   
+          |                                 #                               |   
+          |                                 #                               |   
+          |                                 #                               |   
+          |       +        +       +       +#      +        +       +       |   
+        0 +-----------------------------------------------------------------+   
+          0      500      1000    1500    2000    2500     3000    3500    4000 
+                                  Job profiling step                            
+                                                                                
+
+                                                                                
+                                                                                
+                                  Data written (GB)                             
+  0.045 +-------------------------------------------------------------------+   
+        |        +       +        +       +        +       +      ###       |   
+        |                                                      ####         |   
+   0.04 |-+                                                   ##          +-|   
+        |                                                  ####             |   
+  0.035 |-+                                             ####              +-|   
+        |                                             ###                   |   
+        |                                          ####                     |   
+   0.03 |-+                                    #####                      +-|   
+        |                                   ####                            |   
+  0.025 |-+                               ###                             +-|   
+        |                               ###                                 |   
+        |                            ####                                   |   
+   0.02 |-+                      #####                                    +-|   
+        |                     ####                                          |   
+  0.015 |-+                 ###                                           +-|   
+        |                 ###                                               |   
+        |              ####                                                 |   
+   0.01 |-+          ###                                                  +-|   
+        |          ###                                                      |   
+  0.005 |-+      ###                                                      +-|   
+        |    #####                                                          |   
+        |#####   +       +        +       +        +       +        +       |   
+      0 +-------------------------------------------------------------------+   
+        0       500     1000     1500    2000     2500    3000     3500    4000 
+                                 Job profiling step                             
+                                                                                

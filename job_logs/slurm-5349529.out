@@ -1,0 +1,203 @@
+Loading python-cbrg/current
+  Loading requirement: python-base/3.11.14
+[bioreport] Starting a report for test_pipeline at 2026-03-20 05:00:51 in /ceph/project/sharmalab/dnimrich/cd8atlas/output/test_pipeline
+[bioreport] Loading from /ceph/project/sharmalab/dnimrich/cd8atlas/data/huARdb_v2_GEX.CD8.all_genes.h5ad
+[bioreport] Loaded adata with with shape (1125712, 19957)
+[bioreport] Subsampled into: (100000, 19957)
+[bioreport] Saving into /ceph/project/sharmalab/dnimrich/cd8atlas/data/subsampled_100000.h5ad
+[bioreport] ## 1. Quality Control
+[bioreport] ### 1.1 Ambient RNA QC
+[bioreport] Checking if a cleanup is necessary, flagging cells with less than 1000 counts as potential ambient RNA contamination
+[bioreport] No significant RNA contamination detected, skipping cleanup
+[bioreport] ### 1.2 Count QC
+[bioreport] logged a table: 6 rows x 9 columns
+[bioreport] count outliers with MAD > 5:17798
+[bioreport] mitochondrial outliers with MAD > 5:89879
+[bioreport] saving figure: qc_before_total_counts_hist.png
+[bioreport] saving figure: qc_before_pct_counts_mt_hist.png
+[bioreport] saving figure: qc_before_pct_counts_mt_violin.png
+[bioreport] saving figure: qc_before_scatter_genes_total_mt.png
+[bioreport] Size of matrix before count filtering: (1125712, 19957)
+[bioreport] Size of matrix after count filtering: (1022355, 19832) (removed 9.18% cells)
+[bioreport] Filtering out genes expressed in less than 20 cells
+/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/scanpy/preprocessing/_simple.py:293: ImplicitModificationWarning: Trying to modify attribute `.var` of view, initializing view as actual.
+  adata.var["n_cells"] = number
+[bioreport] Removed 16849 cells (15.04%)
+[bioreport] #### After count QC:
+[bioreport] saving figure: qc_after_total_counts_hist.png
+[bioreport] saving figure: qc_after_pct_counts_mt_hist.png
+[bioreport] saving figure: qc_after_pct_counts_mt_violin.png
+[bioreport] saving figure: qc_after_scatter_genes_total_mt.png
+[bioreport] ## 2. Normalisation
+[bioreport] Normalised in reference to total counts
+[bioreport] Transformed with log1p
+[bioreport] saving figure: normalisation_total_counts_hist.png
+[bioreport] saving figure: normalisation_log1p_hist.png
+[bioreport] Saving into /ceph/project/sharmalab/dnimrich/cd8atlas/output/test_pipeline/test_pipeline_20260320_050051_data/qc+normalised.h5ad
+[bioreport] Saved adata of shape (1022355, 16849)
+[bioreport] ## 3. Feature selection
+[bioreport] ### 3.2 Gene exclusion
+[bioreport] Excluding genes matching the following patterns:
+[bioreport] logged a table: 10 rows x 2 columns
+[bioreport] Removing 312 genes (1.85%)
+[bioreport] Shape after exclusion panel filtering: (1022355, 16537)
+[bioreport] ### 3.3 Highly Variable Gene selection
+[bioreport] HVG selected: 4000
+[bioreport] saving figure: hvg_before.png
+[bioreport] saving figure: hvg_after.png
+[bioreport] ### Top 20 expressed genes after selection:
+/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/scanpy/preprocessing/_normalization.py:269: UserWarning: Received a view of an AnnData. Making a copy.
+  view_to_actual(adata)
+[bioreport] saving figure: top20_expr_genes.png
+[bioreport] ## 4. Dimension reduction
+[bioreport] ### Principal component analysis (PCA)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+[bioreport] Scaled data with max variance cutoff 10
+[bioreport] Calculated PCA with 30 components
+[bioreport] saving figure: pca_variance_ratio.png
+[bioreport] saving figure: pca_scatter.png
+[bioreport] ## 5. Clustering
+2026-03-20 05:15:35.392464: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-03-20 05:15:35.472060: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[bioreport] Calculated nearest 15 neighbours
+[bioreport] Calculated UMAP with min_dist 0.3 and spread 1.0
+/ceph/project/sharmalab/dnimrich/cd8atlas/code/test_pipeline.py:337: FutureWarning: In the future, the default backend for leiden will be igraph instead of leidenalg.
+
+ To achieve the future defaults please pass: flavor="igraph" and n_iterations=2.  directed must also be False to work with igraph's implementation.
+  sc.tl.leiden(adata, resolution=leiden_resolution, key_added=leiden_key)
+[bioreport] Detected clusters with leiden at resolution 0.5
+[bioreport] saving figure: umap_clustering_overview.png
+[bioreport] Saving into /ceph/project/sharmalab/dnimrich/cd8atlas/output/test_pipeline/test_pipeline_20260320_050051_data/adata_processed.h5ad
+[bioreport] Saved processed adata with shape (1022355, 4000)
+[bioreport] exported pdf into: test_pipeline_20260320_050051_report.pdf
+CBB Profiling started Fri Mar 20 05:00:44 2026
+SLURM_JOB_ID		5349529
+REQ_CPU_CORES		16
+REQ_MEMORY_GB		256.000000
+Starting profiling...
+
+                                                                                
+                                                                                
+                                   CPU (cores)                                  
+  16 +----------------------------------------------------------------------+   
+     |         +         +         +          +         +         +         |   
+     |                                                                      |   
+  14 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+  12 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+  10 |-+                                                                  +-|   
+     |                                                                      |   
+   8 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+   6 |-+         #                                                        +-|   
+     |          #####                                                       |   
+     |         ##   ####                                                    |   
+   4 |-+       #       #####                                              +-|   
+     |     #####           ########                                         |   
+     |     # ##                   ################                          |   
+   2 |-+  ##                                     ######################   +-|   
+     | ####                                                           #     |   
+     |####     +         +         +          +         +         +   #     |   
+   0 +----------------------------------------------------------------------+   
+     0        500       1000      1500       2000      2500      3000      3500 
+                               Job profiling step                               
+                                                                                
+
+                                                                                
+                                                                                
+                                    Memory (GB)                                 
+  300 +---------------------------------------------------------------------+   
+      |         +         +         +         +         +         +         |   
+      |                                                                     |   
+      |****************************************************************     |   
+  250 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+  200 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+  150 |-+                                                                 +-|   
+      |                                                                     |   
+      |   ###                                                               |   
+      |  ####                                                               |   
+  100 |-+####                                                             +-|   
+      |  ####                                                               |   
+      |  ####                                                               |   
+      | #####                                                               |   
+   50 |## # #  ########################################################   +-|   
+      |## # ####                                                      #     |   
+      |##                                                             #     |   
+      |#        +         +         +         +         +         +   #     |   
+    0 +---------------------------------------------------------------------+   
+      0        500       1000      1500      2000      2500      3000      3500 
+                                Job profiling step                              
+                                                                                
+
+                                                                                
+                                                                                
+                                   Data read (GB)                               
+   0.005 +------------------------------------------------------------------+   
+         |         +        +         +        +         +        +   #     |   
+  0.0045 |-+                                                          #   +-|   
+         |                                                            #     |   
+         |                                                            #     |   
+   0.004 |-+                                                          #   +-|   
+         |                                                            #     |   
+  0.0035 |-+                                                          #   +-|   
+         |                        #####################################     |   
+   0.003 |-+#######################                                   #   +-|   
+         |  #                                                         #     |   
+  0.0025 |-+#                                                         #   +-|   
+         |  #                                                         #     |   
+         |  #                                                         #     |   
+   0.002 |-+#                                                         #   +-|   
+         |  #                                                         #     |   
+  0.0015 |-+#                                                         #   +-|   
+         |  #                                                         #     |   
+   0.001 |-+#                                                         #   +-|   
+         |###                                                         #     |   
+         |#                                                           #     |   
+  0.0005 |#+                                                          #   +-|   
+         |#        +        +         +        +         +        +   #     |   
+       0 +------------------------------------------------------------------+   
+         0        500      1000      1500     2000      2500     3000      3500 
+                                 Job profiling step                             
+                                                                                
+
+                                                                                
+                                                                                
+                                Data written (GB)                               
+  90 +----------------------------------------------------------------------+   
+     |         +         +         +          +         +         +         |   
+     |                                                                      |   
+  80 |-+                                                              #   +-|   
+     |                                                                #     |   
+  70 |-+                                                              #   +-|   
+     |                                                               ##     |   
+     |                                                               ##     |   
+  60 |-+                                                             ##   +-|   
+     |                                                               ##     |   
+  50 |-+                                                             ##   +-|   
+     |                                                               ##     |   
+     |  ###############################################################     |   
+  40 |-+#                                                             #   +-|   
+     |  #                                                             #     |   
+  30 |-+#                                                             #   +-|   
+     |  #                                                             #     |   
+     |  #                                                             #     |   
+  20 |-+#                                                             #   +-|   
+     |  #                                                             #     |   
+  10 |-+#                                                             #   +-|   
+     |  #                                                             #     |   
+     |  #      +         +         +          +         +         +   #     |   
+   0 +----------------------------------------------------------------------+   
+     0        500       1000      1500       2000      2500      3000      3500 
+                               Job profiling step                               
+                                                                                
