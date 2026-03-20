@@ -4,7 +4,7 @@
 #SBATCH --time=0-02:00:00  # DAYS-HOURS:MINUTES:SECONDS
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=16
-#SBATCH --mem=48G
+#SBATCH --mem=256G
 #SBATCH --partition=short
 
 # Environment:

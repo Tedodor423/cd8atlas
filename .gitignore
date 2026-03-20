@@ -1,2 +1,4 @@
 data/
 __pycache__/
+*data/
+*.h5ad

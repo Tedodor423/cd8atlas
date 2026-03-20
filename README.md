@@ -1,3 +1,7 @@
+# Creating an atlas of CD8 T Cell sc data and using said data for mapping their inhibitory receptor distribution
+
+#### David Theodor Nimrichtr within the [Oxford WIMM Sharma Group](https://www.imm.ox.ac.uk/research/research-groups/sharma-group-mechanistic-t-cell-genomics)
+
 ## Documents
 - [draft project description](https://unioxfordnexus-my.sharepoint.com/:w:/r/personal/rdom0281_ox_ac_uk/Documents/project%20plans/student%20project/David%20project%20draft.docx?d=wd93b3192ff1d45a6a30ebb6606caca1d&csf=1&web=1&e=NgBtd4)
 - [todo list](https://unioxfordnexus-my.sharepoint.com/:w:/r/personal/rdom0281_ox_ac_uk/Documents/project%20plans/student%20project/David-%20to%20do%20list.docx?d=wad99e5995b984b7da27bf1fbebd36035&csf=1&web=1&e=a8Qa2K)
@@ -19,13 +23,21 @@
 	3. [x] Optimise your parameter and collect your statistics about the data (important to justify why you have used specific number of clusters etc., check what are the highly expressed genes does that make biological sense) 
 	4. [ ] Once you have T cell state clusters, use markers to understand what biology each cluster is representing. (You can use the markers in this [paper](https://www.biorxiv.org/content/10.1101/2024.07.17.603780v1.full) Figure 1D). But please also check literature for how you can better name them. You can use the paper of the data.  
 	5. [ ] Then, you can start to check where the inhibitory receptors are expressed (as a sanity check, you need to see them in effector, cytotoxic and exhausted cells and not in naive cells). You can check what meta data you have (disease, tissue collected, age etc) and then try to compare if they have an effect on any receptor expression: Navigate the data with statistics (consider using pseudobulking as well): 
-	6. [ ] Boxplots: x-axis diseases and y-axis scaled expression of receptors among cells. You can make statistical test between them.  
-	7. [ ] Odds ratio: You can binarise expression as exist or not exist and test with Fisher test across tissues/diseases. 
-	8. [ ] More sophisticated a linear model: You can use expression value as y, and x will be any meta data or combination of them, and you can apply OLS and p-value correction to collect significant associations.  
-	9. [ ] Later step would be transcriptional regulation. I will explain later.
+		1. [ ] Boxplots: x-axis diseases and y-axis scaled expression of receptors among cells. You can make statistical test between them.  
+		2. [ ] Odds ratio: You can binarise expression as exist or not exist and test with Fisher test across tissues/diseases. 
+		3. [ ] More sophisticated a linear model: You can use expression value as y, and x will be any meta data or combination of them, and you can apply OLS and p-value correction to collect significant associations.  
+	6. [ ] Later step would be transcriptional regulation. I will explain later.
 
 
 
 # Data Sources
 - https://www.nature.com/articles/s41592-024-02530-0
 - https://zenodo.org/records/13382785
+
+
+# LabBook
+
+### 20. 3. 2026
+- [x] created the labbook
+- 
+
