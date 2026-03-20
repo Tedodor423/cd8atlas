@@ -18,6 +18,7 @@ module load python-cbrg
 
 # custom pip packages
 export PYTHONUSERBASE=/ceph/project/sharmalab/dnimrich/my-python
+export PYTHONPATH=/ceph/project/sharmalab/dnimrich/my-python/lib/python3.11/site-packages${PYTHONPATH:+:$PYTHONPATH}
 
 
 python /ceph/project/sharmalab/dnimrich/cd8atlas/code/test_pipeline.py
