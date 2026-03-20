@@ -1,0 +1,4 @@
+hvg_n_top_genes,n_pcs,n_neighbors,leiden_resolution,min_dist
+2000,20,10,0.3,0.1
+3000,30,15,0.5,0.3
+4000,,20,1.0,0.5
