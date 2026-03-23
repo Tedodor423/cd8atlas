@@ -18,6 +18,9 @@ module load python-cbrg
 
 # custom pip packages
 export PYTHONUSERBASE=/ceph/project/sharmalab/dnimrich/my-python
+export MPLCONFIGDIR=/tmp/cd8atlas_mpl
+export NUMBA_CACHE_DIR=/tmp/cd8atlas_numba
+mkdir -p "$MPLCONFIGDIR" "$NUMBA_CACHE_DIR"
 
-
-python /ceph/project/sharmalab/dnimrich/cd8atlas/code/parameter_iteration/parameter_iteration.py
+cd /ceph/project/sharmalab/dnimrich
+python3 -m cd8atlas.code.parameter_iteration.parameter_iteration

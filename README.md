@@ -35,9 +35,20 @@
 - https://zenodo.org/records/13382785
 
 
+> asdas
+
 # LabBook
 
 ### 20. 3. 2026
 - [x] created the labbook
-- 
+- [x] created the bioreport library
+- [ ] adding more granular gene filtering
+	- [x] copied exclusion patterns from sumana, used cc genes from here https://www.nature.com/articles/s41592-025-02793-1#Sec30 - top 50 genes from the gene expression programmes CellCycle-G2M, CellCycle-S, CellCycle-Late-S
+	- [ ] discussion with Cansu
+- [ ] creating parameter iteration script
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
 
