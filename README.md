@@ -30,6 +30,8 @@
 
 
 
+
+
 # Data Sources
 - https://www.nature.com/articles/s41592-024-02530-0
 - https://zenodo.org/records/13382785
@@ -44,11 +46,52 @@
 - [x] created the bioreport library
 - [ ] adding more granular gene filtering
 	- [x] copied exclusion patterns from sumana, used cc genes from here https://www.nature.com/articles/s41592-025-02793-1#Sec30 - top 50 genes from the gene expression programmes CellCycle-G2M, CellCycle-S, CellCycle-Late-S
-	- [ ] discussion with Cansu
-- [ ] creating parameter iteration script
-- [ ] 
+- [x] creating parameter iteration script
+### 24. 3. 2026
+- [ ] improving the test_pipeline algorithm
+	- [x] dont selecting cc genes in a smarter way
+	- [x] changing order: the full gene exclusion is final step of QC
+- [ ] meeting with Cansu and Sumana
+
+
+Next meeting Sunday afternoon
+inhibitory club - end of april
 - [ ] 
 - [ ] 
 - [ ] 
 - [ ] 
 
+
+
+# Meetings
+### Tasks after meeting on 24. 3. 2026
+
+
+Filter out ACTB, parameters
+
+0. Use FindAllMarkers - most expressed for each cluster -> dot plot
+1.	Inhibitory receptors - they will be not highly expressed - join them into families?
+
+2. Celltypist and compare against the dataset
+Add detailed gene annotation
+Only T cells
+⦁	only 8 and not 4
+⦁	Only 3 (both 4 and 8)
+Inhibitory receptors - they will be not highly expressed - join them into families?
+
+
+2. Cellchat
+⦁	Liana_path julio group
+⦁	Same tissue, same disease, different chats
+⦁	Cancer vs autoimmune
+⦁	https://github.com/sqjin/CellChat
+⦁	https://github.com/saezlab/liana-py
+https://doi.org/10.1038/s41467-022-30755-0
+https://doi.org/10.1038/s41556-024-01469-w
+PBMC cellchat
+Finad a dataset with TIL + tumour tissue -> cellchat
+
+3. Calculate cell cycle stage
+⦁	With seurat (in R?)
+sc.tl.rank_genes_groups(adata, groupby=clustered_name)
+https://scanpy.readthedocs.io/en/1.11.x/api/generated/scanpy.pl.rank_genes_groups_dotplot.html
