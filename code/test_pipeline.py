@@ -121,13 +121,13 @@ sc.pl.scatter(adata, "total_counts", "n_genes_by_counts", color="pct_counts_mt",
 bioreport.figure("qc_before_scatter_genes_total_mt", sameline=True)
 
 ### Filter based on counts
-bioreport.log(f"Size of matrix before count filtering: {adata.shape}")
 before_filter_counts = adata.shape[0]  # statistics
 adata = adata[(~adata.obs.outlier) & (~adata.obs.mt_outlier)]
+bioreport.log(f"Filtered out outliers with log1p_total_counts, log1p_n_genes_by_counts, pct_counts_in_top_20_genes MAD > {outlier_var}: {before_filter_counts - adata.shape[0]} ({adata.shape[0]/before_filter_counts:.2%})")
 
 ### Filter out mt, ribo, hb genes
 adata = adata[:, ~(adata.var.mt | adata.var.ribo | adata.var.hb)]
-bioreport.log(f"Size of matrix after count filtering: {adata.shape} (removed {1 - adata.shape[0] / before_filter_counts:.2%} cells)")
+bioreport.log(f"Filtered out all mito, ribo, hb genes: {before_filter_counts - adata.shape[0]} ({adata.shape[0]/before_filter_counts:.2%})")
 
 ### Filter genes with too few detected cells before HVG selection
 genes_before_filter = adata.n_vars # statistics
