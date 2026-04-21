@@ -2,3 +2,5 @@ data/
 __pycache__/
 *data/
 *.h5ad
+*.tar.gz
+*.h5seurat

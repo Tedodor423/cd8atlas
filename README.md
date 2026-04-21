@@ -63,10 +63,8 @@ https://scanpy.readthedocs.io/en/1.11.x/api/generated/scanpy.pl.rank_genes_group
 
 # Data Sources
 - https://www.nature.com/articles/s41592-024-02530-0
-- https://zenodo.org/records/13382785
+	- https://zenodo.org/records/13382785
 
-
-> asdas
 
 # LabBook
 
@@ -77,29 +75,36 @@ https://scanpy.readthedocs.io/en/1.11.x/api/generated/scanpy.pl.rank_genes_group
 	- [x] copied exclusion patterns from sumana, used cc genes from here https://www.nature.com/articles/s41592-025-02793-1#Sec30 - top 50 genes from the gene expression programmes CellCycle-G2M, CellCycle-S, CellCycle-Late-S
 - [x] creating parameter iteration script
 ### 24. 3. 2026
-- [ ] improving the test_pipeline algorithm
+- [x] improving the test_pipeline algorithm
 	- [x] dont selecting cc genes in a smarter way
 	- [x] changing order: the full gene exclusion is final step of QC
-- [ ] meeting with Cansu and Sumana
+- [x] meeting with Cansu and Sumana, summary bellow
+### 26. 3. 2026
+- [x] added ACTB to filtering based on SUmanas recommendation
+
+### *easter break*
+
+### 17. 4. 2026
+- [x] working findallmarkers implementation (launching the function in R)
+
+### 21. 4. 2026
+- [x] determined best parameters based on my own judgement evaluating the [parameter iteration report](cd8atlas/output/parameter_iteration/parameter_iteration_20260421_035352_report.pdf)
+- [x] implemented state determination based on https://www.biorxiv.org/content/10.1101/2024.07.17.603780v1.full
+- [ ] 
 
 
-Next meeting Sunday afternoon
-inhibitory club - end of april
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
 
 
 
 # Meetings
 ### Tasks after meeting on 24. 3. 2026
 
+inhibitory club - end of april
 
 Filter out ACTB, parameters
 
 0. Use FindAllMarkers - most expressed for each cluster -> dot plot
-1.	Inhibitory receptors - they will be not highly expressed - join them into families?
+1. Filter Inhibitory receptors - they will be not highly expressed - join them into families?
 
 2. Celltypist and compare against the dataset
 Add detailed gene annotation

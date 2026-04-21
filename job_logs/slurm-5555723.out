@@ -1,0 +1,195 @@
+Loading python-cbrg/current
+  Loading requirement: python-base/3.11.14
+Loading R-cbrg/current
+  Loading requirement: R-base/default hdf5/1.10.7
+[bioreport] Starting a report for pipeline_elements at 2026-04-17 17:44:46 in /ceph/project/sharmalab/dnimrich/cd8atlas/output/pipeline_elements
+[bioreport] Loading from /ceph/project/sharmalab/dnimrich/cd8atlas/data/adata_umap_clustering_n=15_mindist=0.3_res=0.5.h5ad
+[bioreport] Loaded adata with with shape (91098, 4000)
+[bioreport] ## 6. Dotplot All Markers
+[bioreport] ### Finding significant genes with FindAllMarkers (via Seurat in R)
+Warning: Data is of class dgTMatrix. Coercing to dgCMatrix.
+Calculating cluster 10
+Calculating cluster 4
+Calculating cluster 8
+Calculating cluster 2
+Calculating cluster 11
+Calculating cluster 3
+Calculating cluster 1
+Calculating cluster 9
+Calculating cluster 18
+Calculating cluster 0
+Calculating cluster 5
+Calculating cluster 21
+Calculating cluster 15
+Calculating cluster 14
+Calculating cluster 6
+Calculating cluster 12
+Calculating cluster 7
+Calculating cluster 19
+Calculating cluster 13
+Calculating cluster 16
+Calculating cluster 17
+Calculating cluster 20
+Calculating cluster 22
+Calculating cluster 23
+Warning: No DE genes identified
+There were 24 warnings (use warnings() to see them)
+Traceback (most recent call last):
+  File "/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'gene'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/ceph/project/sharmalab/dnimrich/cd8atlas/code/pipeline_elements.py", line 545, in <module>
+    def test_pipeline_full():
+        ^^^^^^^^^^^^^^^^^^^^
+  File "/ceph/project/sharmalab/dnimrich/cd8atlas/code/pipeline_elements.py", line 540, in test_pipeline_full
+    
+  File "/ceph/project/sharmalab/dnimrich/cd8atlas/code/pipeline_elements.py", line 516, in dotplot_allmarkers
+    layer=dotplot_layer,
+        ^^^^^^^^^^^^^^^^^
+  File "/ceph/project/sharmalab/dnimrich/cd8atlas/code/pipeline_elements.py", line 461, in findallmarkers
+    r_script_path.write_text(r_script_content)
+                   ^^^^^^^^^^^^^^^^^
+  File "/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/pandas/core/frame.py", line 4113, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'gene'
+CBB Profiling started Fri Apr 17 17:44:40 2026
+SLURM_JOB_ID		5555723
+REQ_CPU_CORES		16
+REQ_MEMORY_GB		128.000000
+Starting profiling...
+
+                                                                                
+                                                                                
+                                   CPU (cores)                                  
+  16 +----------------------------------------------------------------------+   
+     |         +         +         +          +         +         +         |   
+     |                                                                      |   
+  14 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+  12 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+  10 |-+                                                                  +-|   
+     |                                                                      |   
+   8 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+   6 |-+                                                                  +-|   
+     | #                                                                    |   
+     | ##                                                                   |   
+   4 |-##                                                                 +-|   
+     | ###                                                                  |   
+     |#  ####                                                               |   
+   2 |#+    #######                                                       +-|   
+     |#           ####################################################      |   
+     |#        +         +         +          +         +         +  #      |   
+   0 +----------------------------------------------------------------------+   
+     0        200       400       600        800       1000      1200      1400 
+                               Job profiling step                               
+                                                                                
+
+                                                                                
+                                                                                
+                                    Memory (GB)                                 
+  140 +---------------------------------------------------------------------+   
+      |         +         +         +         +         +         +         |   
+      |****************************************************************     |   
+  120 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+  100 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+   80 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                       ####  # ####  # # ####        |   
+   60 |-+                #   #               ##### ###################    +-|   
+      |                  ############ ################################      |   
+      |                ############################ ##   ## #  # # ###      |   
+   40 |-+             ################ ##### # # ## #    ## #  # # ###    +-|   
+      |            ######  #   #     #     #     ##      #         # #      |   
+      |            ####                                              #      |   
+      |          ######                                              #      |   
+   20 |#+    ######                                                  #    +-|   
+      |######                                                        ##     |   
+      |#        +         +         +         +         +         +   #     |   
+    0 +---------------------------------------------------------------------+   
+      0        200       400       600       800       1000      1200      1400 
+                                Job profiling step                              
+                                                                                
+
+                                                                                
+                                                                                
+                                    Data read (GB)                              
+  3.5e-05 +-----------------------------------------------------------------+   
+          |        +         +        +         +        +         +        |   
+          |                                                                 |   
+    3e-05 |-+                                                         #   +-|   
+          |                                                           #     |   
+          |                                                         ###     |   
+          |                                                         # #     |   
+  2.5e-05 |-+                                                       # #   +-|   
+          |                                                     ##### #     |   
+          |                                                     #     #     |   
+    2e-05 |-+                                              ######     #   +-|   
+          |                                                #          #     |   
+          |                                                #          #     |   
+  1.5e-05 |-+                                    ###########          #   +-|   
+          |                                      #                    #     |   
+          |                                 ######                    #     |   
+    1e-05 |-+                               #                         #   +-|   
+          |                                 #                         #     |   
+          |                    ##############                         #     |   
+          |                    #                                      #     |   
+    5e-06 |-+        ###########                                      #   +-|   
+          |          #                                                #     |   
+          |        + #       +        +         +        +         +  #     |   
+        0 +-----------------------------------------------------------------+   
+          0       200       400      600       800      1000      1200     1400 
+                                  Job profiling step                            
+                                                                                
+
+                                                                                
+                                                                                
+                                Data written (GB)                               
+  12 +----------------------------------------------------------------------+   
+     |         +         +         +          +         +         +         |   
+     | ################################################################     |   
+     | #                                                                    |   
+  10 |-#                                                                  +-|   
+     | #                                                                    |   
+     | #                                                                    |   
+     | #                                                                    |   
+   8 |-#                                                                  +-|   
+     | #                                                                    |   
+     | #                                                                    |   
+   6 |-#                                                                  +-|   
+     | #                                                                    |   
+     | #                                                                    |   
+     | #                                                                    |   
+   4 |-#                                                                  +-|   
+     |#                                                                     |   
+     |#                                                                     |   
+     |#                                                                     |   
+   2 |#+                                                                  +-|   
+     |#                                                                     |   
+     |#                                                                     |   
+     |#        +         +         +          +         +         +         |   
+   0 +----------------------------------------------------------------------+   
+     0        200       400       600        800       1000      1200      1400 
+                               Job profiling step                               
+                                                                                

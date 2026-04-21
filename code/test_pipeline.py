@@ -123,9 +123,10 @@ bioreport.figure("qc_before_scatter_genes_total_mt", sameline=True)
 ### Filter based on counts
 before_filter_counts = adata.shape[0]  # statistics
 adata = adata[(~adata.obs.outlier) & (~adata.obs.mt_outlier)]
-bioreport.log(f"Filtered out outliers with log1p_total_counts, log1p_n_genes_by_counts, pct_counts_in_top_20_genes MAD > {outlier_var}: {before_filter_counts - adata.shape[0]} ({adata.shape[0]/before_filter_counts:.2%})")
+bioreport.log(f"Filtered out outliers: {before_filter_counts - adata.shape[0]} ({adata.shape[0]/before_filter_counts:.2%})")
 
 ### Filter out mt, ribo, hb genes
+before_filter_counts = adata.shape[0]  # statistics
 adata = adata[:, ~(adata.var.mt | adata.var.ribo | adata.var.hb)]
 bioreport.log(f"Filtered out all mito, ribo, hb genes: {before_filter_counts - adata.shape[0]} ({adata.shape[0]/before_filter_counts:.2%})")
 

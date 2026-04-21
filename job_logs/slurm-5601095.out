@@ -1,0 +1,187 @@
+Loading python-cbrg/current
+  Loading requirement: python-base/3.11.14
+[bioreport] Starting a report for parameter_iteration at 2026-04-21 01:47:07 in /ceph/project/sharmalab/dnimrich/cd8atlas/output/parameter_iteration
+[bioreport] # Loading and preprocessing data
+[bioreport] Loading from /ceph/project/sharmalab/dnimrich/cd8atlas/data/subsampled_100000.h5ad
+[bioreport] Loaded adata with with shape (100000, 19957)
+[bioreport] Initialized `counts` layer from adata.X
+[bioreport] ## 1. Quality Control
+[bioreport] ### 1.1 Ambient RNA QC
+[bioreport] Checking if a cleanup is necessary, flagging cells with less than 1000 counts as potential ambient RNA contamination
+[bioreport] No significant RNA contamination detected, skipping cleanup
+[bioreport] ### 1.2 Count QC
+[bioreport] logged a table: 6 rows x 9 columns
+[bioreport] saving figure: qc_before_total_counts_hist.png
+[bioreport] saving figure: qc_before_pct_counts_mt_hist.png
+[bioreport] saving figure: qc_before_pct_counts_mt_violin.png
+[bioreport] saving figure: qc_before_scatter_genes_total_mt.png
+[bioreport] Number of count outliers with `MAD > 5`: 1548
+[bioreport] Number of mitochondrial outliers with `MAD > 5` or `pct_counts_mt > 8`: 7739
+[bioreport] Filtered out outliers: 8902 (8.90%)
+[bioreport] Filtering out genes expressed in less than 20 cells
+/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/scanpy/preprocessing/_simple.py:293: ImplicitModificationWarning: Trying to modify attribute `.var` of view, initializing view as actual.
+  adata.var["n_cells"] = number
+[bioreport] Removed 14368 genes (28.01%)
+[bioreport] #### After count QC:
+[bioreport] saving figure: qc_after_total_counts_MAD=5.png
+[bioreport] saving figure: qc_after_pct_counts_mt_MAD=5.png
+[bioreport] saving figure: qc_after_pct_counts_mt_violin_MAD=5.png
+[bioreport] saving figure: qc_after_scatter_genes_total_mt_MAD=5.png
+[bioreport] ### 1.4 Gene exclusion
+[bioreport] Excluding genes matching the following patterns:
+[bioreport] logged a table: 10 rows x 2 columns
+[bioreport] Removing 343 genes (2.39%)
+[bioreport] Shape after exclusion panel filtering: (91098, 14025)
+[bioreport] ## 2. Normalisation
+[bioreport] Normalised in reference to total counts
+[bioreport] Transformed with log1p
+[bioreport] saving figure: normalisation_total_counts_hist.png
+[bioreport] saving figure: normalisation_log1p_hist.png
+[bioreport] # Hardcoded parameter grid
+[bioreport] logged a table: 5 rows x 2 columns
+[bioreport] Running 18 clustering evaluations (1 HVG settings x 2 PC settings x 3 neighbor settings x 3 Leiden resolutions)
+[bioreport] Rendering 18 UMAP panels for visualization (3 min_dist settings for each clustering graph)
+[bioreport] # UMAP summary grid
+/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/scanpy/preprocessing/_normalization.py:269: UserWarning: Received a view of an AnnData. Making a copy.
+  view_to_actual(adata)
+[bioreport] ## HVG 4000, PCs 20
+[bioreport] Columns are n_neighbors = 10, 15, 20. Each panel contains all Leiden resolutions: 0.3, 0.5, 1.0.
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+2026-04-21 01:49:08.657021: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-04-21 01:49:10.074792: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+/ceph/project/sharmalab/dnimrich/cd8atlas/code/parameter_iteration/parameter_iteration.py:84: FutureWarning: In the future, the default backend for leiden will be igraph instead of leidenalg.
+
+ To achieve the future defaults please pass: flavor="igraph" and n_iterations=2.  directed must also be False to work with igraph's implementation.
+  pipeline.sc.tl.leiden(adata_graph, resolution=leiden_resolution, key_added=leiden_key)
+slurmstepd-imm-wn7: error: *** JOB 5601095 ON imm-wn7 CANCELLED AT 2026-04-21T01:51:15 DUE TO TIME LIMIT ***
+CBB Profiling started Tue Apr 21 01:46:58 2026
+SLURM_JOB_ID		5601095
+REQ_CPU_CORES		64
+REQ_MEMORY_GB		256.000000
+Starting profiling...
+
+                                                                                
+                                                                                
+                                   CPU (cores)                                  
+  70 +----------------------------------------------------------------------+   
+     |             +             +              +             +             |   
+     |**********************************************************************|   
+  60 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+     |                                                                      |   
+  50 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+  40 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+  30 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+  20 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+     |                                                                      |   
+  10 |-+                                                                  +-|   
+     |                     #####                                            |   
+     |#####     ############   #############################################|   
+   0 +----------------------------------------------------------------------+   
+     0             50           100            150           200           250  
+                               Job profiling step                               
+                                                                                
+
+                                                                                
+                                                                                
+                                    Memory (GB)                                 
+  300 +---------------------------------------------------------------------+   
+      |             +             +             +             +             |   
+      |                                                                     |   
+      |*********************************************************************|   
+  250 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+  200 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+  150 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+  100 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+   50 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+      |            #+ ######################################################|   
+    0 +---------------------------------------------------------------------+   
+      0             50           100           150           200           250  
+                                Job profiling step                              
+                                                                                
+
+                                                                                
+                                                                                
+                                   Data read (GB)                               
+   0.03 +-------------------------------------------------------------------+   
+        |             +            +             +            +             |   
+        |                                                                   |   
+        |                                                                   |   
+  0.025 |###################################################################|   
+        |#                                                                  |   
+        |#                                                                  |   
+        |#                                                                  |   
+   0.02 |#+                                                               +-|   
+        |#                                                                  |   
+        |#                                                                  |   
+  0.015 |#+                                                               +-|   
+        |#                                                                  |   
+        |#                                                                  |   
+        |#                                                                  |   
+   0.01 |#+                                                               +-|   
+        |#                                                                  |   
+        |#                                                                  |   
+        |#                                                                  |   
+  0.005 |#+                                                               +-|   
+        |#                                                                  |   
+        |#                                                                  |   
+        |             +            +             +            +             |   
+      0 +-------------------------------------------------------------------+   
+        0             50          100           150          200           250  
+                                 Job profiling step                             
+                                                                                
+
+                                                                                
+                                                                                
+                                  Data written (GB)                             
+  0.007 +-------------------------------------------------------------------+   
+        |             +            +             +            +             |   
+        |                                                                   |   
+  0.006 |-+                                               ##################|   
+        |                              ####################                 |   
+        |                        #######                                    |   
+        |                        #                                          |   
+  0.005 |-+                      #                                        +-|   
+        |                       #                                           |   
+        |                      ##                                           |   
+  0.004 |-+                    #                                          +-|   
+        |                      #                                            |   
+        |                      #                                            |   
+  0.003 |-+               ######                                          +-|   
+        |                ##                                                 |   
+        |              ##                                                   |   
+  0.002 |-+           #                                                   +-|   
+        |             #                                                     |   
+        |          ###                                                      |   
+        |          #                                                        |   
+  0.001 |-+       ##                                                      +-|   
+        |         #                                                         |   
+        |#########    +            +             +            +             |   
+      0 +-------------------------------------------------------------------+   
+        0             50          100           150          200           250  
+                                 Job profiling step                             
+                                                                                

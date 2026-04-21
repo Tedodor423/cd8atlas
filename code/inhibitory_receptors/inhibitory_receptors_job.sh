@@ -3,8 +3,8 @@
 # Resources:
 #SBATCH --time=0-04:00:00  # DAYS-HOURS:MINUTES:SECONDS
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=48G
+#SBATCH --cpus-per-task=48
+#SBATCH --mem=128G
 #SBATCH --partition=short
 
 # Environment:
@@ -15,9 +15,12 @@
 
 # What to run:
 module load python-cbrg
+module load R-cbrg
 
 # custom pip packages
 export PYTHONUSERBASE=/ceph/project/sharmalab/dnimrich/my-python
+export MPLCONFIGDIR=/tmp/cd8atlas_mpl
+export PYTHONPATH=/ceph/project/sharmalab/dnimrich/my-python/lib/python3.11/site-packages${PYTHONPATH:+:$PYTHONPATH}
 
-
-python /ceph/project/sharmalab/dnimrich/cd8atlas/code/inhibitory_receptors/inhibitory_receptors.py
+cd /ceph/project/sharmalab/dnimrich
+python3 -m cd8atlas.code.inhibitory_receptors.inhibitory_receptors.py
