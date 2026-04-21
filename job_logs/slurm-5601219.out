@@ -25,3 +25,13 @@ Loading R-cbrg/current
 [bioreport] saving figure: pca_variance_ratio_n=25.png
 [bioreport] saving figure: pca_scatter_n=25.png
 [bioreport] ### UMAP
+2026-04-21 06:35:58.595808: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-04-21 06:35:58.646268: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[bioreport] Calculated nearest 12 neighbours using 25 PCs
+[bioreport] Calculated UMAP with min_dist 0.1 and spread 1.0
+[bioreport] ## 5. Clustering
+/ceph/project/sharmalab/dnimrich/cd8atlas/code/pipeline_elements.py:563: FutureWarning: In the future, the default backend for leiden will be igraph instead of leidenalg.
+
+ To achieve the future defaults please pass: flavor="igraph" and n_iterations=2.  directed must also be False to work with igraph's implementation.
+  sc.tl.leiden(adata, resolution=leiden_resolution, key_added=leiden_key)
