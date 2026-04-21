@@ -59,6 +59,59 @@ def load_inhibitory_receptor_genes(filename="inhibitory_receptor_list.csv") -> l
     return sorted(receptor_genes)
 
 
+def label_inhibitory_receptor_score(
+    adata,
+    receptor_genes: list[str],
+    score_col: str = "inhibitory_receptor_score",
+):
+    feature_symbols = pipeline.pd.Series(
+        adata.var["gene_symbol"].astype(str).to_numpy(),
+        index=adata.var_names,
+    )
+    matched_features = feature_symbols.index[feature_symbols.isin(receptor_genes)].tolist()
+    pipeline.sc.tl.score_genes(
+        adata,
+        gene_list=matched_features,
+        score_name=score_col,
+        ctrl_size=max(1, min(50, len(matched_features))),
+        random_state=pipeline.random_seed,
+        use_raw=False,
+        layer="log1p",
+    )
+    bioreport.log(f"Calculated inhibitory receptor score from {len(matched_features)} genes", heading=3)
+    return adata
+
+
+def inhibitory_receptor_heatmap(
+    adata,
+    receptor_genes: list[str],
+    groupby_col: str = "cluster_annotation",
+    figure_name: str = "heatmap_cluster_annotation_X_inhibitory_receptors",
+):
+    feature_symbols = pipeline.pd.Series(
+        adata.var["gene_symbol"].astype(str).to_numpy(),
+        index=adata.var_names,
+    )
+    matched_features = feature_symbols.index[feature_symbols.isin(receptor_genes)].tolist()
+    adata.var["inhibitory_receptors_selected"] = adata.var_names.isin(matched_features)
+
+    adata_plot = adata[:, matched_features].copy()
+    adata_plot.var_names = pipeline.plot_var_names(adata_plot)
+    heatmap_layer = "log1p" if "log1p" in adata.layers else None
+
+    pipeline.sc.pl.heatmap(
+        adata_plot,
+        var_names=adata_plot.var_names.tolist(),
+        groupby=groupby_col,
+        use_raw=False,
+        layer=heatmap_layer,
+        standard_scale="var",
+        show=False,
+    )
+    bioreport.figure(figure_name)
+    return adata
+
+
 
 pipeline.init("inhibitory_receptors")
 
@@ -87,9 +140,18 @@ adata = pipeline.umap_basic(
     save=True,
 )
 
+adata = label_inhibitory_receptor_score(adata, receptor_genes)
 adata = pipeline.label_states( adata, "state_markers.csv")  # from https://www.biorxiv.org/content/10.1101/2024.07.17.603780v1.full
+adata = pipeline.load_cluster_state_summary_csv(
+    adata,
+    filename="cluster_state_summary_names.csv",
+    cluster_col="leiden",
+    annotation_col="cluster_annotation",
+    source_col="manual_cluster_name",
+    data_dir=pipeline.root_dir / "data",
+)
 pipeline.umap_plot(adata,
-    umap_color_cols=["leiden", "state_label", "state_score_max", "state_score_margin"],
+    umap_color_cols=["leiden", "state_label", "state_score_max", "state_score_margin", "inhibitory_receptor_score"],
     name="umap_states")
 
 adata.var["state_markers_selected"] = adata.var_names.isin(pipeline.marker_genes_from_csv("state_markers.csv"))
@@ -105,5 +167,8 @@ pipeline.dotplot(adata, cluster_col="leiden",
 
 adata = pipeline.dotplot_allmarkers(adata, n_markers_per_cluster=3, cluster_col="leiden")
 pipeline.export_cluster_state_summary_csv(adata, cluster_col="leiden", state_col="state_label", filename="cluster_state_summary.csv")
+adata = inhibitory_receptor_heatmap(adata, receptor_genes, groupby_col="cluster_annotation")
+
+
 
 pipeline.export()

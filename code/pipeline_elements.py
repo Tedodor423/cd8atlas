@@ -483,8 +483,9 @@ def load_cluster_state_summary_csv(adata: sc.AnnData,
                                    filename: str = "cluster_state_summary.csv",
                                    cluster_col: str = LEIDEN_COL,
                                    annotation_col: str = "cluster_annotation",
-                                   source_col: str = "manual_cluster_name") -> sc.AnnData:
-    csv_path = bioreport.file_load(filename)
+                                   source_col: str = "manual_cluster_name",
+                                   data_dir: Path | None = None) -> sc.AnnData:
+    csv_path = bioreport.file_load(filename, data_dir=data_dir)
     summary_df = pd.read_csv(csv_path, dtype=str).fillna("")
     annotation_map = (
         summary_df.loc[summary_df[source_col].astype(str).str.strip() != "", ["cluster", source_col]]
