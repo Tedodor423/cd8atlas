@@ -114,3 +114,10 @@ Plotting 27 genes from adata.var[`state_markers_selected`]
 
 
 FindAllMarkers will use up to 48 R worker(s)
+
+Ran FindAllMarkers in R, keeping up to 3 markers per cluster and selected 70 genes
+
+Plotting 70 genes from adata.var[`findallmarkers_selected`]
+
+[<img src="inhibitory_receptors_20260421_061614_figures/dotplot_leiden_allmarkers.png" width="50%">](inhibitory_receptors_20260421_061614_figures/dotplot_leiden_allmarkers.png)
+

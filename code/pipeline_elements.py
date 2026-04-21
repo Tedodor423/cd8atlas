@@ -481,6 +481,15 @@ def marker_genes_from_csv(marker_csv_name: str) -> list[str]:
     return marker_df["gene"].tolist()
 
 
+def marker_gene_groups_from_csv(marker_csv_name: str) -> dict[str, list[str]]:
+    marker_file = root_dir / "data" / marker_csv_name
+    marker_df = pd.read_csv(marker_file, sep=",", quotechar="'", skipinitialspace=True, dtype=str).fillna("")
+    return {
+        state_name: state_rows["gene"].tolist()
+        for state_name, state_rows in marker_df.groupby("marker", sort=False)
+    }
+
+
 def feature_selection_full(adata: sc.AnnData,
                            n_top_genes: int = 4000,
                            old_seurat: bool = True,
@@ -769,6 +778,7 @@ def dotplot(adata: sc.AnnData,
             cluster_col: str | None = None,
             genes_bool_col: str = "findallmarkers_selected",
             standard_scale: str | None = "var",
+            gene_groups: dict[str, list[str]] | None = None,
             swap_axes: bool = False,
             figure_name: str | None = None) -> None:
 
@@ -792,15 +802,24 @@ def dotplot(adata: sc.AnnData,
     dotplot_layer = "log1p" if "log1p" in adata.layers else None
     adata_plot = adata[:, dotplot_gene_ids].copy()
     adata_plot.var_names = plot_var_names(adata_plot)
+    plot_name_by_gene_id = dict(zip(dotplot_gene_ids, adata_plot.var_names.tolist(), strict=False))
     if cluster_col is None:
         adata_plot.obs["_all_cells"] = "all"
         groupby_col = "_all_cells"
     else:
         groupby_col = cluster_col
 
+    var_names = adata_plot.var_names.tolist()
+    if gene_groups is not None:
+        grouped_var_names = {
+            group_name: [plot_name_by_gene_id[gene_id] for gene_id in gene_ids if gene_id in plot_name_by_gene_id]
+            for group_name, gene_ids in gene_groups.items()
+        }
+        var_names = {group_name: genes for group_name, genes in grouped_var_names.items() if genes}
+
     plot = sc.pl.dotplot(
         adata_plot,
-        var_names=adata_plot.var_names.tolist(),
+        var_names=var_names,
         groupby=groupby_col,
         use_raw=False,
         layer=dotplot_layer,

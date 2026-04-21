@@ -1,0 +1,27 @@
+Loading python-cbrg/current
+  Loading requirement: python-base/3.11.14
+Loading R-cbrg/current
+  Loading requirement: R-base/default hdf5/1.10.7
+[bioreport] Starting a report for inhibitory_receptors at 2026-04-21 06:34:42 in /ceph/project/sharmalab/dnimrich/cd8atlas/output/inhibitory_receptors
+[bioreport] Loading from /ceph/project/sharmalab/dnimrich/cd8atlas/data/qc+subsampled_100000.h5ad
+[bioreport] Loaded adata with with shape (91098, 14025)
+[bioreport] Preserved existing `counts` layer from loaded adata
+[bioreport] Labeled 13256 genes from protein-coding_gene.txt
+[bioreport] ## 3. Feature selection
+[bioreport] ### 3.3 Highly Variable Gene selection
+[bioreport] HVGs selected: 4000 (including 27 whitelisted genes)
+[bioreport] saving figure: hvg_before_seurat_4000.png
+[bioreport] saving figure: hvg_after_seurat_4000.png
+[bioreport] ### Top 20 expressed genes after selection:
+[bioreport] saving figure: top20_expr_genes.png
+[bioreport] ## 4. Dimensional reduction
+[bioreport] ### Principal component analysis (PCA)
+/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/scanpy/preprocessing/_scale.py:309: UserWarning: Received a view of an AnnData. Making a copy.
+  view_to_actual(adata)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+[bioreport] Scaled data with max variance cutoff 10
+[bioreport] Calculated PCA with 25 components
+[bioreport] saving figure: pca_variance_ratio_n=25.png
+[bioreport] saving figure: pca_scatter_n=25.png
+[bioreport] ### UMAP
