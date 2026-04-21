@@ -23,4 +23,4 @@ export MPLCONFIGDIR=/tmp/cd8atlas_mpl
 export PYTHONPATH=/ceph/project/sharmalab/dnimrich/my-python/lib/python3.11/site-packages${PYTHONPATH:+:$PYTHONPATH}
 
 cd /ceph/project/sharmalab/dnimrich
-python3 -m cd8atlas.code.inhibitory_receptors.inhibitory_receptors.py
+python3 -m cd8atlas.code.inhibitory_receptors.inhibitory_receptors

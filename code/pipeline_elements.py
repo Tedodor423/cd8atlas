@@ -361,7 +361,11 @@ def label_states(adata: sc.AnnData,
                  ) -> sc.AnnData:
     marker_file = root_dir / "data" / marker_csv_name
     marker_df = pd.read_csv(marker_file, sep=",", quotechar="'", skipinitialspace=True, dtype=str).fillna("")
-    dataset_genes = set(adata.var_names)
+    if "gene_symbol" in adata.var.columns:
+        feature_symbols = pd.Series(adata.var["gene_symbol"].astype(str).to_numpy(), index=adata.var_names)
+    else:
+        feature_symbols = pd.Series(adata.var_names.astype(str), index=adata.var_names)
+    dataset_genes = {gene for gene in feature_symbols.tolist() if gene}
 
     bioreport.log("Labeling states based on markers:", heading=3)
     marker_table = pd.DataFrame(
@@ -379,9 +383,9 @@ def label_states(adata: sc.AnnData,
 
     for state_name, state_rows in marker_df.groupby("marker", sort=False):
         state_genes = state_rows["gene"].tolist()
-        matched_features = [gene for gene in state_genes if gene in dataset_genes]
+        matched_features = feature_symbols.index[feature_symbols.isin(state_genes)].tolist()
         all_state_genes.update(state_genes)
-        all_matched_genes.update(matched_features)
+        all_matched_genes.update(feature_symbols.loc[matched_features].tolist())
 
         col_suffix = re.sub(r"[^A-Za-z0-9]+", "_", state_name).strip("_").lower()
         score_col = f"state_score_{col_suffix}"
@@ -424,6 +428,74 @@ def label_states(adata: sc.AnnData,
     state_counts = adata.obs["state_label"].value_counts().rename_axis("state").reset_index(name="n_cells")
     state_counts["pct_cells"] = (100 * state_counts["n_cells"] / adata.n_obs).round(1)
     bioreport.table(state_counts.to_dict(orient="records"), maxrows=20)
+    return adata
+
+
+def cluster_state_summary(adata: sc.AnnData,
+                          cluster_col: str = LEIDEN_COL,
+                          state_col: str = "state_label") -> pd.DataFrame:
+    marker_df = adata.uns.get("findallmarkers")
+    marker_cluster_col = adata.uns.get("findallmarkers_cluster_col")
+    plot_label_by_gene = pd.Series(plot_var_names(adata), index=adata.var_names.astype(str))
+    summary_rows = []
+    for cluster_name, cluster_obs in adata.obs.groupby(cluster_col, sort=False):
+        state_counts = cluster_obs[state_col].value_counts()
+        dominant_state = state_counts.index[0]
+        dominant_state_pct = round(100 * state_counts.iloc[0] / len(cluster_obs), 1)
+        row = {
+            "cluster": cluster_name,
+            "n_cells": int(len(cluster_obs)),
+            "dominant_state": dominant_state,
+            "pct_dominant_state": dominant_state_pct,
+        }
+        if "cell_subtype_3" in cluster_obs.columns:
+            subtype_counts = cluster_obs["cell_subtype_3"].value_counts()
+            row["dominant_cell_subtype_3"] = subtype_counts.index[0]
+            row["pct_dominant_cell_subtype_3"] = round(100 * subtype_counts.iloc[0] / len(cluster_obs), 1)
+        if isinstance(marker_df, pd.DataFrame) and marker_cluster_col == cluster_col and "cluster" in marker_df.columns and "gene" in marker_df.columns:
+            cluster_markers = marker_df.loc[marker_df["cluster"].astype(str) == str(cluster_name), "gene"].dropna().astype(str).tolist()
+            top_marker_series = pd.Series(cluster_markers[:5], index=cluster_markers[:5], dtype=str)
+            top_marker_labels = plot_label_by_gene.reindex(cluster_markers[:5]).fillna(top_marker_series).astype(str).tolist()
+            row["top_markers"] = "; ".join(top_marker_labels)
+        summary_rows.append(row)
+
+    summary_df = pd.DataFrame(summary_rows)
+    adata.uns["cluster_state_summary"] = summary_df
+    bioreport.log(f"Cluster-to-state summary by `{cluster_col}`:", heading=3)
+    bioreport.table(summary_df.to_dict(orient="records"), maxrows=50)
+    return summary_df
+
+
+def export_cluster_state_summary_csv(adata: sc.AnnData,
+                                     cluster_col: str = LEIDEN_COL,
+                                     state_col: str = "state_label",
+                                     filename: str = "cluster_state_summary.csv") -> pd.DataFrame:
+    summary_df = cluster_state_summary(adata, cluster_col=cluster_col, state_col=state_col).copy()
+    if "manual_cluster_name" not in summary_df.columns:
+        summary_df["manual_cluster_name"] = ""
+    csv_path = bioreport.file_save(filename)
+    summary_df.to_csv(csv_path, index=False)
+    bioreport.log(f"Saved cluster summary CSV for manual annotation: {csv_path.name}")
+    return summary_df
+
+
+def load_cluster_state_summary_csv(adata: sc.AnnData,
+                                   filename: str = "cluster_state_summary.csv",
+                                   cluster_col: str = LEIDEN_COL,
+                                   annotation_col: str = "cluster_annotation",
+                                   source_col: str = "manual_cluster_name") -> sc.AnnData:
+    csv_path = bioreport.file_load(filename)
+    summary_df = pd.read_csv(csv_path, dtype=str).fillna("")
+    annotation_map = (
+        summary_df.loc[summary_df[source_col].astype(str).str.strip() != "", ["cluster", source_col]]
+        .drop_duplicates(subset="cluster", keep="last")
+        .set_index("cluster")[source_col]
+        .to_dict()
+    )
+    adata.obs[annotation_col] = adata.obs[cluster_col].astype(str).map(annotation_map).fillna("")
+    bioreport.log(
+        f"Loaded manual cluster annotations from {csv_path.name} into adata.obs['{annotation_col}']"
+    )
     return adata
 
 def selection_hvg(adata: sc.AnnData,
@@ -655,7 +727,7 @@ def findallmarkers(adata: sc.AnnData,
         raise ValueError("`n_markers_per_cluster` must be at least 1")
 
     bioreport.log("Finding significant genes with FindAllMarkers (via Seurat in R)", heading=3)
-    bioreport.log(f"FindAllMarkers will use up to {n_workers} R worker(s)")
+    bioreport.log(f"parallelising with up to {n_workers} R worker(s)")
     output_csv = Path(root_dir) / "output" / f"{output_basename}_markers.csv"
 
     counts_matrix = adata.layers["counts"] if "counts" in adata.layers else adata.X
