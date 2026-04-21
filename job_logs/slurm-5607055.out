@@ -1,0 +1,222 @@
+Loading python-cbrg/current
+  Loading requirement: python-base/3.11.14
+Loading R-cbrg/current
+  Loading requirement: R-base/default hdf5/1.10.7
+[bioreport] Starting a report for inhibitory_receptors at 2026-04-21 11:00:22 in /ceph/project/sharmalab/dnimrich/cd8atlas/output/inhibitory_receptors
+[bioreport] Loading from /ceph/project/sharmalab/dnimrich/cd8atlas/data/qc+subsampled_100000.h5ad
+[bioreport] Loaded adata with with shape (91098, 14025)
+[bioreport] Preserved existing `counts` layer from loaded adata
+[bioreport] Labeled 13256 genes from protein-coding_gene.txt
+[bioreport] Loading from /ceph/project/sharmalab/dnimrich/cd8atlas/code/inhibitory_receptors/inhibitory_receptor_list.csv
+[bioreport] ## 3. Feature selection
+[bioreport] ### 3.3 Highly Variable Gene selection
+[bioreport] HVGs selected: 4016 (including 90 whitelisted genes)
+[bioreport] saving figure: hvg_before_seurat_4000.png
+[bioreport] saving figure: hvg_after_seurat_4000.png
+[bioreport] ### Top 20 expressed genes after selection:
+[bioreport] saving figure: top20_expr_genes.png
+[bioreport] ### Missing inhibitory receptor genes: 30, present genes: 66
+[bioreport] ## 4. Dimensional reduction
+[bioreport] ### Principal component analysis (PCA)
+/package/python-cbrg/current/3.11.14/lib/python3.11/site-packages/scanpy/preprocessing/_scale.py:309: UserWarning: Received a view of an AnnData. Making a copy.
+  view_to_actual(adata)
+/package/python-base/3.11.14/lib/python3.11/functools.py:909: UserWarning: zero-centering a sparse array/matrix densifies it.
+  return dispatch(args[0].__class__)(*args, **kw)
+[bioreport] Scaled data with max variance cutoff 10
+[bioreport] Calculated PCA with 25 components
+[bioreport] saving figure: pca_variance_ratio_n=25.png
+[bioreport] saving figure: pca_scatter_n=25.png
+[bioreport] ### UMAP
+2026-04-21 11:02:18.895707: I external/local_xla/xla/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2026-04-21 11:02:19.904447: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[bioreport] Calculated nearest 12 neighbours using 25 PCs
+[bioreport] Calculated UMAP with min_dist 0.1 and spread 1.0
+[bioreport] ## 5. Clustering
+/ceph/project/sharmalab/dnimrich/cd8atlas/code/pipeline_elements.py:636: FutureWarning: In the future, the default backend for leiden will be igraph instead of leidenalg.
+
+ To achieve the future defaults please pass: flavor="igraph" and n_iterations=2.  directed must also be False to work with igraph's implementation.
+  sc.tl.leiden(adata, resolution=leiden_resolution, key_added=leiden_key)
+[bioreport] Detected 19 clusters with leiden at resolution 0.4
+[bioreport] saving figure: umap_plot_n=12_mindist=0.1_res=0.4.png
+[bioreport] Saving into /ceph/project/sharmalab/dnimrich/cd8atlas/output/inhibitory_receptors/inhibitory_receptors_20260421_110022_data/adata_umap_clustering_n=12_mindist=0.1_res=0.4.h5ad
+[bioreport] 
+> Saved adata with shape (91098, 4016)
+[bioreport] ### Calculated inhibitory receptor score from 66 genes
+[bioreport] ### Labeling states based on markers:
+[bioreport] logged a table: 9 rows x 4 columns
+[bioreport] State marker genes in dataset: 30 present, 1 missing
+[bioreport] Omitted state markers: IFNG1
+[bioreport] ### Assigned state labels:
+[bioreport] logged a table: 4 rows x 3 columns
+[bioreport] Loading from /ceph/project/sharmalab/dnimrich/cd8atlas/data/cluster_state_summary_names.csv
+[bioreport] Loaded manual cluster annotations from cluster_state_summary_names.csv into adata.obs['cluster_annotation']
+[bioreport] saving figure: umap_plot_umap_states.png
+[bioreport] Plotting 30 genes from adata.var[`state_markers_selected`]
+[bioreport] saving figure: dotplot_state_label_X_state_markers.png
+[bioreport] Plotting 30 genes from adata.var[`state_markers_selected`]
+[bioreport] saving figure: dotplot_leiden_X_state_markers.png
+[bioreport] ## 6. FindAllMarkers
+[bioreport] ### Finding significant genes with FindAllMarkers (via Seurat in R)
+[bioreport] parallelising with up to 48 R worker(s)
+Warning: Data is of class dgTMatrix. Coercing to dgCMatrix.
+Using future::multicore with 48 workers for FindAllMarkers
+Calculating cluster 8
+Calculating cluster 7
+Calculating cluster 2
+Calculating cluster 10
+Calculating cluster 0
+Calculating cluster 1
+Calculating cluster 16
+Calculating cluster 5
+Calculating cluster 11
+Calculating cluster 9
+Calculating cluster 13
+Calculating cluster 12
+Calculating cluster 3
+Calculating cluster 4
+Calculating cluster 14
+Calculating cluster 6
+Calculating cluster 17
+Calculating cluster 15
+Calculating cluster 18
+[bioreport] Ran FindAllMarkers in R, keeping up to 3 markers per cluster and selected 53 genes
+[bioreport] Plotting 53 genes from adata.var[`findallmarkers_selected`]
+[bioreport] saving figure: dotplot_leiden_allmarkers.png
+/ceph/project/sharmalab/dnimrich/cd8atlas/code/pipeline_elements.py:441: FutureWarning: The default of observed=False is deprecated and will be changed to True in a future version of pandas. Pass observed=False to retain current behavior or observed=True to adopt the future default and silence this warning.
+  for cluster_name, cluster_obs in adata.obs.groupby(cluster_col, sort=False):
+[bioreport] ### Cluster-to-state summary by `leiden`:
+[bioreport] logged a table: 19 rows x 7 columns
+[bioreport] Saving into /ceph/project/sharmalab/dnimrich/cd8atlas/output/inhibitory_receptors/inhibitory_receptors_20260421_110022_data/cluster_state_summary.csv
+[bioreport] Saved cluster summary CSV for manual annotation: cluster_state_summary.csv
+[bioreport] saving figure: heatmap_cluster_annotation_X_inhibitory_receptors.png
+[bioreport] exported pdf into: inhibitory_receptors_20260421_110022_report.pdf
+CBB Profiling started Tue Apr 21 11:00:09 2026
+SLURM_JOB_ID		5607055
+REQ_CPU_CORES		48
+REQ_MEMORY_GB		128.000000
+Starting profiling...
+
+                                                                                
+                                                                                
+                                   CPU (cores)                                  
+  50 +----------------------------------------------------------------------+   
+     |*******************************************************************   |   
+  45 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+  40 |-+                                                                  +-|   
+     |                                                                      |   
+  35 |-+                                                                  +-|   
+     |                                                                      |   
+  30 |-+                                                                  +-|   
+     |                                                                      |   
+  25 |-+                                                                  +-|   
+     |                                                                      |   
+     |                                                                      |   
+  20 |-+                                                                  +-|   
+     |                                                                      |   
+  15 |-+                                                                  +-|   
+     |                                                                      |   
+  10 |-+                                                                  +-|   
+     |                                                                      |   
+     |                         #########                                    |   
+   5 |-+        ###########  ##        ###############################    +-|   
+     |##     +  #    +     ##+       +      +       +       +       +####   |   
+   0 +----------------------------------------------------------------------+   
+     0       50     100     150     200    250     300     350     400     450  
+                               Job profiling step                               
+                                                                                
+
+                                                                                
+                                                                                
+                                    Memory (GB)                                 
+  140 +---------------------------------------------------------------------+   
+      |       +       +      +       +       +       +      +       +       |   
+      |******************************************************************   |   
+  120 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+  100 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+   80 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+   60 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+   40 |-+                                                                 +-|   
+      |                                                                     |   
+      |                                                                     |   
+      |                                                                     |   
+   20 |-+                                                                 +-|   
+      |         ###                                         ##########      |   
+      |    ###### ################################################ ######   |   
+    0 +---------------------------------------------------------------------+   
+      0       50     100    150     200     250     300    350     400     450  
+                                Job profiling step                              
+                                                                                
+
+                                                                                
+                                                                                
+                                   Data read (GB)                               
+  0.0009 +------------------------------------------------------------------+   
+         |      +       +      +       +      +       +      +       +      |   
+         |                                            ###################   |   
+  0.0008 |-+                                          #                   +-|   
+         |                                            #                     |   
+  0.0007 |-+                                          #                   +-|   
+         |                                            #                     |   
+         |                                            #                     |   
+  0.0006 |-+                                          #                   +-|   
+         |                                            #                     |   
+  0.0005 |-+                                          #                   +-|   
+         |                                            #                     |   
+         |                                            #                     |   
+  0.0004 |-+                                          #                   +-|   
+         |                                            #                     |   
+  0.0003 |-+                                          #                   +-|   
+         |                                            #                     |   
+         |                                            #                     |   
+  0.0002 |-+                                          #                   +-|   
+         |                                            #                     |   
+  0.0001 |-+                                          #                   +-|   
+         |                                            #                     |   
+         |      +       +      +       +      +       #      +       +      |   
+       0 +------------------------------------------------------------------+   
+         0      50     100    150     200    250     300    350     400    450  
+                                 Job profiling step                             
+                                                                                
+
+                                                                                
+                                                                                
+                                 Data written (GB)                              
+    4 +---------------------------------------------------------------------+   
+      |       +       +      +       +       +       +###################   |   
+      |                                               #                     |   
+  3.5 |-+                                            ##                   +-|   
+      |                                              #                      |   
+      |                                              #                      |   
+    3 |-+                                            #                    +-|   
+      |                                              #                      |   
+      |                                              #                      |   
+  2.5 |-+                                            #                    +-|   
+      |                                              #                      |   
+    2 |-+                                            #                    +-|   
+      |                                              #                      |   
+      |                                              #                      |   
+  1.5 |-+                                            #                    +-|   
+      |                                              #                      |   
+      |                                             #                       |   
+    1 |-+                                           #                     +-|   
+      |                                             #                       |   
+      |                                             #                       |   
+  0.5 |-+                                           #                     +-|   
+      |                                             #                       |   
+      |       +       +      +       +       +      #+      +       +       |   
+    0 +---------------------------------------------------------------------+   
+      0       50     100    150     200     250     300    350     400     450  
+                                Job profiling step                              
+                                                                                

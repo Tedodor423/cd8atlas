@@ -129,3 +129,23 @@ Finad a dataset with TIL + tumour tissue -> cellchat
 ⦁	With seurat (in R?)
 sc.tl.rank_genes_groups(adata, groupby=clustered_name)
 https://scanpy.readthedocs.io/en/1.11.x/api/generated/scanpy.pl.rank_genes_groups_dotplot.html
+
+
+CD3D, CD3G, CD247
+filter NK cells
+CD8a CD8b
+
+
+try inhibitory both HVG and non HVG
+
+overexpression analysis
+
+filter out far small clusters?
+
+sanity check the dataset
+- common t cell markers
+- macrophage
+
+show top genes for pca
+
+dublet scores
