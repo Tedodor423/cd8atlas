@@ -94,20 +94,41 @@ def inhibitory_receptor_heatmap(
     )
     matched_features = feature_symbols.index[feature_symbols.isin(receptor_genes)].tolist()
     adata.var["inhibitory_receptors_selected"] = adata.var_names.isin(matched_features)
-
     adata_plot = adata[:, matched_features].copy()
     adata_plot.var_names = pipeline.plot_var_names(adata_plot)
     heatmap_layer = "log1p" if "log1p" in adata.layers else None
 
-    pipeline.sc.pl.heatmap(
-        adata_plot,
-        var_names=adata_plot.var_names.tolist(),
-        groupby=groupby_col,
-        use_raw=False,
-        layer=heatmap_layer,
-        standard_scale="var",
-        show=False,
+    expr = adata_plot.layers[heatmap_layer] if heatmap_layer is not None else adata_plot.X
+    if pipeline.sp.issparse(expr):
+        expr = expr.toarray()
+    expr_df = pipeline.pd.DataFrame(
+        expr,
+        index=adata_plot.obs[groupby_col].astype(str).to_numpy(),
+        columns=adata_plot.var_names,
     )
+    mean_expr = expr_df.groupby(level=0, sort=False).mean()
+    mean_expr = mean_expr.loc[mean_expr.index != ""]
+    heatmap_df = mean_expr.T
+    heatmap_df = heatmap_df.sub(heatmap_df.mean(axis=1), axis=0)
+    row_std = heatmap_df.std(axis=1).replace(0, 1)
+    heatmap_df = heatmap_df.div(row_std, axis=0)
+
+    fig_width = max(8, 0.8 * heatmap_df.shape[1] + 4)
+    fig_height = max(14, 0.28 * heatmap_df.shape[0] + 2)
+    pipeline.plt.figure(figsize=(fig_width, fig_height))
+    pipeline.sns.heatmap(
+        heatmap_df,
+        cmap="vlag",
+        center=0,
+        xticklabels=True,
+        yticklabels=True,
+        cbar_kws={"label": "Mean scaled log1p expression"},
+    )
+    pipeline.plt.xlabel(groupby_col)
+    pipeline.plt.ylabel("Inhibitory receptor genes")
+    pipeline.plt.xticks(rotation=45, ha="right")
+    pipeline.plt.yticks(rotation=0)
+    pipeline.plt.tight_layout()
     bioreport.figure(figure_name)
     return adata
 
